@@ -5,7 +5,7 @@ mkdir /home/box/etc/
 sudo mv /home/box/web/etc/hello.py /home/box/etc/hello.py
 sudo ln -s /home/box/etc/hello.py /etc/gunicorn.d/hello.py
 
-cd /home/box/web/
+cd /home/box/web/ask/
 sudo nginx
-sudo gunicorn --config /home/box/etc/hello.py hello:wsgi_application 
+gunicorn --config /home/box/etc/hello.py ask.wsgi 
 
