@@ -62,7 +62,9 @@ ROOT_URLCONF = 'ask.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            '/home/semyonk/web/stepik-project/ask/qa/templates'
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +91,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_qa',
-#       'USER': 'semyonk',
+#        'USER': 'semyonk',
         'USER': 'box',
 #        'PASSWORD': '9219',
 #        'HOST': 'localhost',

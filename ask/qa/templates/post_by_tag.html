@@ -1,0 +1,34 @@
+<nav><ul class = "pagination">
+
+<p>page.number: {{page_number_type}}</p>
+<p>page: {{page_type}}</p>
+<p>paginator.page_range: {{pag_page_type}}</p>
+<p>paginarot.page_range[1]: {{pag_page_number_type}}</p>
+
+testnumber: "{{ testnumber }}
+<br>
+<br>
+---
+{% for post, url in posts_with_url.items %}
+	
+	<li>
+	{{ post.title }}
+	<br>
+	<a href = "{{ url }}"> {{url}} </a>
+	</li>
+
+{% endfor %}
+<br>
+---
+<br>
+{% for p in paginator.page_range %}
+	{%if p == page.number%}
+	<li class="active">
+	{% else %}
+	<li>
+	{% endif %}
+		<a href = "{{ paginator.base_url }}{{ p }}">
+		{{p}} </a>
+	</li>
+{% endfor %}
+</ul></nav>

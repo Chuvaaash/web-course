@@ -23,11 +23,12 @@ from django.urls import path
 from qa import views
 
 urlpatterns = [
-        path('', views.test),
+#        path('', views.test),
         path('login/', views.test),
         path('signup/', views.test),
-        path('question/<a123>/', views.test),
+        path('question/<question_number>/', views.question_page),
         path('ask/', views.test),
-        path('popular/', views.test),
-        path('new/', views.test),
+        path('popular/', views.popular),
+        path('', views.main_page),
+#        path('new/', views.post_list_all),
 ]
