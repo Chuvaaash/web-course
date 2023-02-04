@@ -27,8 +27,11 @@ urlpatterns = [
         path('login/', views.test),
         path('signup/', views.test),
         path('question/<question_number>/', views.question_page),
-        path('ask/', views.test),
+        path('ask/', views.create_question),
         path('popular/', views.popular),
         path('', views.main_page),
 #        path('new/', views.post_list_all),
-]
+#        path('create/', views.post_add),
+#        path('create_post/', views.post_add),
+#        path('post/<post_number>/', views.post_page),
+    ]

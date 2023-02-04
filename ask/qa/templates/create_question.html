@@ -1,18 +1,10 @@
-<nav><ul class = "pagination">
-<h1>{{ title }} </h1>
-{{ text }}
-{% for answer in answers %}
-	<h6>{{ answer.text }}</h6>
-	-----
-{% endfor %}
-
-{% for error in answer_form.non_field_errors %}
+{% for error in form.non_field_errors %}
 	<div class="alert alert-danger">{{ error }}</div>
 {% endfor %}
-<form class="form-horizontal" method="post" action="{{ question_url }}">
+<form class="form-horizontal" method="post" action="/ask/">
 	{% csrf_token %}
 	<fieldset>
-	{% for field in answer_form %}
+	{% for field in form %}
 		<div class="control-group
 			    {% if field.errors %}has-error{% endif %}">
 			<div class="controls">{{ field }}</div>
@@ -21,6 +13,6 @@
 	</fieldset>
 	<div class = "form-actions">
 		<button type="submit" class="btn btn-primary">
-			Send</button>
+			Save</button>
 	</div>
 </form>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
 
 class QuestionManager(models.Manager):
    def new(self):
@@ -30,8 +31,8 @@ class Answer(models.Model):
 #class Post(models.Model):
 #    title = models.CharField(max_length=255)
 #    content = models.TextField()
-#    creation_date = models.DateTimeField(blank=True)
-#    is_published = models.BooleanField()
+#    creation_date = models.DateTimeField(blank=True, auto_now_add=True)
+#    is_published = models.BooleanField(blank=True)
 #    def __unicode__(self):
 #        return self.title
 #    def get_absolute_url(self):
@@ -39,3 +40,11 @@ class Answer(models.Model):
 #    class Meta:
 #        db_table = 'blogposts'
 #        ordering = ['-creation_date']
+#
+#
+#def is_ethic(message):
+#    if not message == 'loh':
+#        return True
+#    else:
+#        return False
+
