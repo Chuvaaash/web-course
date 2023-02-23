@@ -24,12 +24,12 @@ from qa import views
 
 urlpatterns = [
 #        path('', views.test),
-        path('login/', views.test),
-        path('signup/', views.test),
+        path('login/', views.login_page),
         path('question/<question_number>/', views.question_page),
         path('ask/', views.create_question),
         path('popular/', views.popular),
         path('', views.main_page),
+        path('signup/', views.signup)
 #        path('new/', views.post_list_all),
 #        path('create/', views.post_add),
 #        path('create_post/', views.post_add),

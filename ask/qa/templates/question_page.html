@@ -12,12 +12,25 @@
 <form class="form-horizontal" method="post" action="{{ question_url }}">
 	{% csrf_token %}
 	<fieldset>
-	{% for field in answer_form %}
+	{% comment %}
+		{% for field in answer_form %}
 		<div class="control-group
 			    {% if field.errors %}has-error{% endif %}">
 			<div class="controls">{{ field }}</div>
 		</div>
 	{% endfor %}
+	{% endcomment %}
+	<div class="control-group
+		    {% if answer_form.title.errors %}has-error{% endif %}">		
+		{{ answer_form.errors.get.title }}
+		<div class="controls">{{ answer_form.text }}</div>
+	</div>
+	<div class="control-group
+		    {% if anwser_form.text.errors %}has-error{% endif %}">
+		{{ answer_form.errors.question }}
+		<div class="controls">{{ answer_form.question }}</div>
+	</div>
+	{{ answer_form.errors.user }}
 	</fieldset>
 	<div class = "form-actions">
 		<button type="submit" class="btn btn-primary">

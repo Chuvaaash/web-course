@@ -1,0 +1,21 @@
+<nav><ul class = "pagination">
+<div class="alert alert-danger">{{ error }}</div>
+{% for error in form.non_field_errors %}
+	<div class="alert alert-danger">{{ error }}</div>
+{% endfor %}
+<form class="form-horizontal" method="post" action="/login/">
+	{% csrf_token %}
+	<fieldset>
+	{% for field in form %}
+		<div class="control-group
+			    {% if field.errors %}has-error{% endif %}">
+			<div class="label">{{ field.label }}</div>
+			<div class="controls">{{ field }}</div>
+		</div>
+	{% endfor %}
+	</fieldset>
+	<div class = "form-actions">
+		<button type="submit" class="btn btn-primary">
+			Send</button>
+	</div>
+</form>

@@ -1,16 +1,23 @@
+from datetime import datetime, timedelta
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.core.paginator import Paginator
+from django.contrib.auth import authenticate, login
 
 #from qa.models import Post
 from qa.models import Question
 from qa.models import Answer
+from qa.models import User
+from qa.models import Session
 #from qa.forms import AddPostForm
 #from qa.forms import is_ethic
 from qa.forms import AskForm
 from qa.forms import AnswerForm
+from qa.forms import UserForm
+from qa.forms import LoginForm
 
 # Create your views here.
 
@@ -53,10 +60,17 @@ def question_page(request, question_number):
     try:
         question_url = request.path_info
         if request.method == 'POST':
-            answer_form = AnswerForm(request.POST)
-            if answer_form.is_valid():
-                answer = answer_form.save(question_number)
-                return HttpResponseRedirect(question_url)
+            if request.user.is_authenticated:
+                answer_form = AnswerForm(request.POST)
+#                answer_form.user = request.user.id
+                if answer_form.is_valid():
+                    user_id = request.user.id
+                    answer = answer_form.save(question_number, user_id)
+                    return HttpResponseRedirect(question_url)
+#                else:
+#                    return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/signup')
         else:
             answer_form = AnswerForm()
 
@@ -139,13 +153,99 @@ def question_page(request, question_number):
 
 def create_question(request):
     if request.method == 'POST':
-        form = AskForm(request.POST)
-        if form.is_valid():
-            question = form.save()
-            url = question.get_absolute_url()
-            return HttpResponseRedirect(url)
+        user = request.user
+        if user.is_authenticated:
+            form = AskForm(request.POST)
+            if form.is_valid():
+                question = form.save(user.id)
+                url = question.get_absolute_url()
+                return HttpResponseRedirect(url)
+        else:
+            return HttpResponseRedirect('/signup')
     else:
         form = AskForm()
     return render(request, 'create_question.html', {
         'form': form
    })
+
+def signup(request):
+    if request.method == 'POST':
+#        username = request.POST.get('username')
+#        email = request.POST.get('email')
+#        password = request.POST.get('password')
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            url = '/'
+            return HttpResponseRedirect(url)
+    else:
+        form = UserForm()
+    return render(request, 'signup.html', {
+        'form': form
+    })
+
+
+#def do_login(user):
+#    session = Session()
+#    session.sessionid = session.generate_sessionid(session.id)
+#    session.user = user
+#    session.expires = datetime.now() + timedelta(days=5)
+#    session.save()
+#    return session.sessionid
+
+
+#def login(request):
+#    if request.method == 'POST':
+#        username = request.POST.get('username')
+#        password = request.POST.get('password')
+#        user = authenticate(username=username, password=password)
+#        if user is not None:
+#            sessionid = do_login(user)
+#            url = '/'
+#            response = HttpResponseRedirect(url)
+#            response.set_cookie('session', sessionid,
+#                    domain = '/', httponly=True,
+#                    expires = datetime.now() + timedelta(days=5)
+#            )
+#            return response
+#        else:
+#            form = LoginForm()
+#            form.username = username
+#            form.password = password
+#            error = 'Wrong login or password. Try again'
+#        return render(request, 'login.html', {
+#            'form': form,
+#            'error' : error
+#        })
+#    else:
+#        form = LoginForm()
+#    return render(request, 'login.html', {
+#        'form': form
+#    })
+
+
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            url = '/'
+            response = HttpResponseRedirect(url)
+            #set cookie
+            return response
+        else:
+            form = LoginForm()
+            error = u'Wrong login or password. Try again'
+            return render(request, 'login.html', {
+                'form': form,
+                'error': error
+            })
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {
+        'form': form
+    })
+

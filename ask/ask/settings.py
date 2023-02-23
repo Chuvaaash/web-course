@@ -79,6 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ask.wsgi.application'
 
+#AUTH_USER_MODEL = 'qa.myUser.User'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -141,3 +142,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'

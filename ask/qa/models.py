@@ -48,3 +48,13 @@ class Answer(models.Model):
 #    else:
 #        return False
 
+
+class Session(models.Model):
+    sessionid = models.CharField(unique=True, max_length=255)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    expires = models.DateTimeField()
+
+    def generate_sessionid(self, key):
+#        key = Session.objects.all().count()
+        key = str(key) + 'abc'
+        return key
